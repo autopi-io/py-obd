@@ -143,7 +143,7 @@ class OBDCommand():
         return "%s: %s" % (self.command, self.desc)
 
     def __hash__(self):
-        # needed for using commands as keys in a dict (see async.py)
+        # needed for using commands as keys in a dict (see _async.py)
         return hash(self.command)
 
     def __eq__(self, other):

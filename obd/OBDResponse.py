@@ -36,6 +36,9 @@ from .codes import *
 
 import logging
 
+import six
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -135,7 +138,7 @@ class Monitor():
     def __getitem__(self, key):
         if isinstance(key, int):
             return self._tests.get(key, MonitorTest())
-        elif isinstance(key, str) or isinstance(key, unicode):
+        elif isinstance(key, six.text_type):
             return self.__dict__.get(key, MonitorTest())
         else:
             logger.warning("Monitor test results can only be retrieved by TID value or property name")

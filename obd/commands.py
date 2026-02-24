@@ -36,6 +36,9 @@ from .decoders import *
 
 import logging
 
+import six
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -342,7 +345,7 @@ class Commands():
 
         if isinstance(key, int):
             return self.modes[key]
-        elif isinstance(key, str) or isinstance(key, unicode):
+        elif isinstance(key, six.text_type):
             return self.__dict__[key]
         else:
             logger.warning("OBD commands can only be retrieved by PID value or dict name")

@@ -11,7 +11,7 @@
 #                                                                      #
 ########################################################################
 #                                                                      #
-# async.py                                                             #
+# _async.py                                                             #
 #                                                                      #
 # This file is part of python-OBD (a derivative of pyOBD)              #
 #                                                                      #
