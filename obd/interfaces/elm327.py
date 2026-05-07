@@ -727,6 +727,23 @@ class ELM327(object):
         self._runtime_settings["print_spaces"] = value
 
 
+    def _normalize_cmd(self, cmd):
+        if isinstance(cmd, bytearray):
+            try:
+                return bytes(cmd).decode("ascii")
+            except UnicodeDecodeError:
+                raise TypeError("Command must be ASCII bytes or str")
+
+        # In Python 2, bytes is an alias of str, so only decode true bytes objects.
+        if isinstance(cmd, bytes) and not isinstance(cmd, str):
+            try:
+                return cmd.decode("ascii")
+            except UnicodeDecodeError:
+                raise TypeError("Command must be ASCII bytes or str")
+
+        return cmd
+
+
     def query(self, cmd, header=None, parse=True, read_timeout=None):
         """
         Used to service all OBDCommands.
@@ -738,6 +755,8 @@ class ELM327(object):
 
         Returns a list of parsed Message objects or raw response lines.
         """
+
+        cmd = self._normalize_cmd(cmd)
 
         if not cmd.startswith("AT"):  # Special commands do not need this (ELM_VERSION, ELM_VOLTAGE)
 
@@ -764,6 +783,8 @@ class ELM327(object):
         """
         Ralays any command to the interface.
         """
+
+        cmd = self._normalize_cmd(cmd)
 
         try:
 
@@ -802,6 +823,8 @@ class ELM327(object):
         Will write the given string, no questions asked.
         Returns read result (a list of line strings) after an optional delay.
         """
+
+        cmd = self._normalize_cmd(cmd)
 
         self._write(cmd)
 
